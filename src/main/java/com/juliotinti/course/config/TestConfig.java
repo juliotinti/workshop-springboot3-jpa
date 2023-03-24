@@ -8,9 +8,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.juliotinti.course.entities.Category;
 import com.juliotinti.course.entities.Order;
 import com.juliotinti.course.entities.User;
 import com.juliotinti.course.entities.enums.OrderStatus;
+import com.juliotinti.course.repositories.CategoryRepository;
 import com.juliotinti.course.repositories.OrderRepository;
 import com.juliotinti.course.repositories.UserRepository;
 
@@ -23,6 +25,8 @@ public class TestConfig implements CommandLineRunner{
 	private UserRepository userRepository;
 	@Autowired
 	private OrderRepository orderRepository;
+	@Autowired
+	private CategoryRepository categoryRepository;
 
 	@Override
 	public void run(String... args) throws Exception { //tudo que você colocar aqui vai ser executado quando a aplicação for iniciada
@@ -34,11 +38,18 @@ public class TestConfig implements CommandLineRunner{
 		Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), OrderStatus.WAITING_PAYMENT, u2);
 		Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), OrderStatus.WAITING_PAYMENT, u1); 
 		
+		Category cat1 = new Category(null, "Electronics");
+		Category cat2 = new Category(null, "Books");
+		Category cat3 = new Category(null, "Computers"); 
+		
 		//quem acessa o banco de dados do User é o UserRepository
 		userRepository.saveAll(Arrays.asList(u1, u2)); //isso salva uma lista no db
 		
 		//quem acessa o banco de dados do Order é o OrderRepository
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+		
+		//quem acessa o banco de dados do Category é o CategoryRepository
+		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
 	}
 	
 	
