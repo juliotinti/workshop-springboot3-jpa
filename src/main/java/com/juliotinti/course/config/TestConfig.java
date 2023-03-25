@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.juliotinti.course.entities.Category;
 import com.juliotinti.course.entities.Order;
+import com.juliotinti.course.entities.OrderItem;
 import com.juliotinti.course.entities.Product;
 import com.juliotinti.course.entities.User;
 import com.juliotinti.course.entities.enums.OrderStatus;
 import com.juliotinti.course.repositories.CategoryRepository;
+import com.juliotinti.course.repositories.OrderItemRepository;
 import com.juliotinti.course.repositories.OrderRepository;
 import com.juliotinti.course.repositories.ProductRepository;
 import com.juliotinti.course.repositories.UserRepository;
@@ -31,6 +33,8 @@ public class TestConfig implements CommandLineRunner{
 	private CategoryRepository categoryRepository;
 	@Autowired
 	private ProductRepository productRepository;
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 	
 	@Override
 	public void run(String... args) throws Exception { //tudo que você colocar aqui vai ser executado quando a aplicação for iniciada
@@ -72,6 +76,13 @@ public class TestConfig implements CommandLineRunner{
 		
 		//quem acessa o banco de dados do Order é o OrderRepository
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+		
+		OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+		OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+		OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice()); 
+
+		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4)); 
 		
 	}
 	
