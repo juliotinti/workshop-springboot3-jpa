@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.juliotinti.course.entities.User;
 import com.juliotinti.course.repositories.UserRepository;
+import com.juliotinti.course.services.exceptions.ResourceNotFoundException;
 
 @Service //para registrar a classe como componente do Spring, possibilitando o mecanismo de injeção de dependencia do Spring
 public class UserService {
@@ -21,7 +22,7 @@ public class UserService {
 	
 	public User finalById(long id) {
 		Optional<User> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id)); //orElseThrow tenta fazer o get, se n tiver usuário, ele lança uma exceção
 	}
 	
 	public User insert(User user) {
